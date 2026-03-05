@@ -1,15 +1,27 @@
-# Comparative-SLAM-EKF-vs-Graph
+# MicroSLAM-CPP : Système de Cartographie Mobile en Temps Réel
 
-## Problématique
+## Présentation du Projet
+Ce projet consiste à développer un système de **SLAM (Simultaneous Localization and Mapping)** de A à Z en C++ pour un petit robot mobile. L'objectif est de transformer les données brutes d'un capteur (Lidar ou Caméra) en une carte cohérente tout en estimant la position du robot avec précision.
 
-Comment l'arbitrage entre la précision et la consommation de ressources évolue-t-il lorsqu'on passe d'une approche récursive (Filtre de Kalman) à une approche globale (Optimisation de Graphe) dans un contexte temps-réel ?
+## Objectifs du Projet
+1.  **Acquisition de données :** Interfaçage avec les capteurs du robot (Lidar/IMU/Odométrie).
+2.  **Scan Matching :** Aligner les mesures successives pour estimer le déplacement (Algorithme ICP ou Correlative Scan Matching).
+3.  **Cartographie :** Construction d'une grille d'occupation (Occupancy Grid) en temps réel.
+4.  **Optimisation :** Correction de la trajectoire lors des fermetures de boucle (Loop Closure).
 
-## Les deux approches à comparer
+## Configuration Matérielle
+* **Robot :** [Indique ton modèle, ex: TurtleBot, Châssis DIY, etc.]
+* **Capteur Principal :** [Ex: RPLidar A1, Intel RealSense, ou simple Caméra USB]
+* **Calculateur :** [Ex: Raspberry Pi 4, Jetson Nano]
 
-### A. Le Filtre de Kalman Étendu (EKF-SLAM)
+## Architecture Logicielle (C++)
+Le projet est découpé en modules indépendants pour garantir la performance :
+* **`Sensor_Driver`** : Lecture et filtrage des données brutes.
+* **`Odometry_Engine`** : Calcul de la pose relative via les encodeurs et l'IMU.
+* **`SLAM_Core`** : Algorithme de localisation et mise à jour de la carte.
+* **`Visualizer`** : Rendu de la carte et du trajet (via OpenCV ou SFML).
 
-C'est l'approche historique. On met à jour l'état du robot et des "landmarks" (points de repère) à chaque nouvelle donnée de capteur.Avantage : Faible latence, mathématiquement élégant pour le temps réel.Inconvénient : La matrice de covariance explose en taille à mesure que la carte grandit (complexité quadratique $O(n^2)$).
-
-### B. L'Optimisation de Graphe (Graph-Based SLAM)
-
-Ici, on considère le trajet du robot comme des nœuds et les mesures comme des contraintes entre ces nœuds.Avantage : Plus robuste sur le long terme (on peut corriger tout le trajet d'un coup lors d'une "fermeture de boucle" ou Loop Closure).Inconvénient : Plus gourmand en calcul lors de l'optimisation (nécessite souvent des solveurs de matrices creuses).
+## Dépendances
+* **Eigen 3** : Pour tous les calculs matriciels et les transformations géométriques.
+* **OpenCV** : Pour la visualisation de la grille d'occupation et le traitement d'image.
+* **PThreads/C++ Threads** : Pour séparer l'acquisition de données du calcul SLAM.
