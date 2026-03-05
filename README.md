@@ -1,5 +1,7 @@
 # MicroSLAM-CPP : Système de Cartographie Mobile en Temps Réel
 
+![Logo](assets/logo-SLAM.png)
+
 ## Présentation du Projet
 Ce projet consiste à développer un système de **SLAM (Simultaneous Localization and Mapping)** de A à Z en C++ pour un petit robot mobile. L'objectif est de transformer les données brutes d'un capteur (Lidar ou Caméra) en une carte cohérente tout en estimant la position du robot avec précision.
 
@@ -25,3 +27,8 @@ Le projet est découpé en modules indépendants pour garantir la performance :
 * **Eigen 3** : Pour tous les calculs matriciels et les transformations géométriques.
 * **OpenCV** : Pour la visualisation de la grille d'occupation et le traitement d'image.
 * **PThreads/C++ Threads** : Pour séparer l'acquisition de données du calcul SLAM.
+
+## Introduction SLAM
+
+https://www.youtube.com/watch?v=U6vr3iNrwRA&list=PLgnQpQtFTOGQrZ4O5QzbIHgl3b1JHimN_
+
